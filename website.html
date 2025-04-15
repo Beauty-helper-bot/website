@@ -46,6 +46,7 @@
             align-items: center;
             position: relative;
             z-index: 2;
+            animation: fadeInDown 0.8s ease-out;
         }
         
         .logo {
@@ -68,16 +69,33 @@
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
         nav ul li a:hover {
             opacity: 0.8;
         }
         
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
         .hero {
             padding: 80px 0;
             text-align: center;
+            animation: fadeIn 1s ease-out 0.3s both;
         }
         
         .hero h1 {
@@ -99,6 +117,8 @@
             font-weight: 600;
             transition: all 0.3s ease;
             font-size: 16px;
+            position: relative;
+            overflow: hidden;
         }
         
         .btn-primary {
@@ -113,6 +133,15 @@
             margin-left: 15px;
         }
         
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
         .features {
             padding: 80px 0;
         }
@@ -120,6 +149,14 @@
         .section-title {
             text-align: center;
             margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .section-title.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .features-grid {
@@ -133,12 +170,20 @@
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
+            transition: all 0.4s ease;
             text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .feature-card.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .feature-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
         
         .feature-icon {
@@ -152,6 +197,11 @@
             margin: 0 auto 20px;
             color: white;
             font-size: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotate(15deg) scale(1.1);
         }
         
         .how-it-works {
@@ -171,6 +221,14 @@
             text-align: center;
             padding: 0 20px;
             margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .step.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .step-number {
@@ -185,6 +243,12 @@
             font-size: 24px;
             font-weight: 700;
             margin: 0 auto 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover .step-number {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .testimonials {
@@ -202,6 +266,19 @@
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .testimonial-card.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
         .testimonial-text {
@@ -219,6 +296,14 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .cta.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         footer {
@@ -231,6 +316,29 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 40px;
+        }
+        
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
         @media (max-width: 768px) {
@@ -405,37 +513,67 @@
                 
                 <div>
                     <h3>Контакты</h3>
-                    <p>Telegram: @kosmetichka_bot</p>
-                    <p>Поддержка: @kosmetichka_support</p>
+                    <p>Telegram: @beauti_helper_bot</p>
+                    <p>Поддержка: https://clicks.su/9lRdMb</p>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Простая анимация при прокрутке
         document.addEventListener('DOMContentLoaded', function() {
-            const animateElements = document.querySelectorAll('.feature-card, .step, .testimonial-card');
-            
-            function checkScroll() {
-                animateElements.forEach(el => {
-                    const elTop = el.getBoundingClientRect().top;
-                    if (elTop < window.innerHeight - 100) {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
+            // Анимация элементов при прокрутке
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.section-title, .feature-card, .step, .testimonial-card, .cta');
+                const windowHeight = window.innerHeight;
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const elementVisible = 100;
+                    
+                    if (elementPosition < windowHeight - elementVisible) {
+                        element.classList.add('animated');
                     }
                 });
-            }
+            };
             
-            // Инициализация
-            animateElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'all 0.6s ease';
+            // Запускаем при загрузке
+            animateOnScroll();
+            
+            // И запускаем при прокрутке
+            window.addEventListener('scroll', animateOnScroll);
+            
+            // Анимация для кнопок при наведении
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
             });
             
-            window.addEventListener('scroll', checkScroll);
-            checkScroll(); // Проверить при загрузке
+            // Плавная прокрутка для якорных ссылок
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
         });
     </script>
 </body>
