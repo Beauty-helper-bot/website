@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Косметичка - умный бот для подбора косметики</title>
+    <style>
+        :root {
+            --primary: #ff6b9e;
+            --secondary: #7e57c2;
+            --dark: #333;
+            --light: #f8f9fa;
+            --success: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+        
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            margin-left: 15px;
+        }
+        
+        .features {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 30px;
+        }
+        
+        .how-it-works {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 0 20px;
+            margin-bottom: 30px;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        
+        .testimonials {
+            padding: 80px 0;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px 10px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .btn {
+                display: block;
+                margin: 10px auto;
+                max-width: 250px;
+            }
+            
+            .btn-outline {
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Косметичка</div>
+                <nav>
+                    <ul>
+                        <li><a href="#features">Возможности</a></li>
+                        <li><a href="#how-it-works">Как это работает</a></li>
+                        <li><a href="#testimonials">Отзывы</a></li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <div class="hero">
+                <h1>Умный подбор косметики в Telegram</h1>
+                <p>Персонализированные рекомендации по уходу и макияжу на основе ваших предпочтений</p>
+                <!-- ВСТАВЬТЕ ССЫЛКУ НА ВАШЕГО БОТА ВМЕСТО #bot-link -->
+                <a href="#bot-link" class="btn btn-primary">Попробовать бота</a>
+                <a href="#features" class="btn btn-outline">Узнать больше</a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Почему выбирают Косметичку</h2>
+                <p>Наш бот использует инновационный алгоритм для подбора идеальных косметических продуктов</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👩‍🎨</div>
+                    <h3>Для него и для неё</h3>
+                    <p>Подбираем косметику независимо от пола. У нас есть рекомендации для всех!</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎥</div>
+                    <h3>Видеогайды и лайфхаки</h3>
+                    <p>Обучающие материалы от топовых визажистов и бьюти-экспертов</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💸</div>
+                    <h3>Выгодные акции</h3>
+                    <p>Следим за скидками и предлагаем персональные промокоды</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Как работает Косметичка</h2>
+                <p>Всего 3 простых шага до идеального ухода и макияжа</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Запустите бота</h3>
+                    <p>Откройте нашего бота в Telegram и начните диалог</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Ответьте на вопросы</h3>
+                    <p>Пройдите короткий опрос о ваших предпочтениях и типе кожи</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Получите рекомендации</h3>
+                    <p>Бот предложит идеальные продукты и покажет, где купить выгоднее</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Что говорят пользователи</h2>
+                <p>Тысячи довольных клиентов уже нашли свою идеальную косметику</p>
+            </div>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Бот подобрал мне идеальный тон основы, хотя я сама никогда не могла правильно выбрать. Теперь это мой must-have в косметичке!"</p>
+                    <p class="testimonial-author">Анна, блогер</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Как мужчина, я мало что понимаю в косметике, но бот помог подобрать уход, который действительно работает. Просто и понятно!"</p>
+                    <p class="testimonial-author">Дмитрий, IT-специалист</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Обожаю промокоды от Косметички! Благодаря им попробовала люксовые бренды со скидкой. Теперь только через бота делаю покупки."</p>
+                    <p class="testimonial-author">Екатерина, маркетолог</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Видеогайды от бота научили меня профессиональному макияжу. Теперь экономлю на визажистах!"</p>
+                    <p class="testimonial-author">Ольга, студентка</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Рекомендации бота помогли решить проблему с акне. Теперь у меня есть система ухода, которая действительно работает."</p>
+                    <p class="testimonial-author">Александра</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Удобно, что можно подобрать косметику и для мужа. Он наконец-то перестал пользоваться моими средствами!"</p>
+                    <p class="testimonial-author">Ирина</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta" id="cta">
+        <div class="container">
+            <h2>Готовы найти свою идеальную косметику?</h2>
+            <p>Попробуйте нашего бота прямо сейчас и получите персональные рекомендации бесплатно</p>
+            <!-- ВСТАВЬТЕ ССЫЛКУ НА ВАШЕГО БОТА ВМЕСТО #bot-link -->
+            <a href="#bot-link" class="btn btn-primary">Начать в Telegram</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>Косметичка</h3>
+                    <p>Умный бот для подбора косметики с персонализированными рекомендациями</p>
+                </div>
+                
+                <div>
+                    <h3>Контакты</h3>
+                    <p>Telegram: @kosmetichka_bot</p>
+                    <p>Поддержка: @kosmetichka_support</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Простая анимация при прокрутке
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.feature-card, .step, .testimonial-card');
+            
+            function checkScroll() {
+                animateElements.forEach(el => {
+                    const elTop = el.getBoundingClientRect().top;
+                    if (elTop < window.innerHeight - 100) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }
+                });
+            }
+            
+            // Инициализация
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', checkScroll);
+            checkScroll(); // Проверить при загрузке
+        });
+    </script>
+</body>
+</html>
